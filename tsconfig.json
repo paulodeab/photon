@@ -1,6 +1,23 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "target": "es5",
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "jsx": "react",
+    "module": "commonjs",
+    "allowJs": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "extends": "expo/tsconfig.base"
 }
