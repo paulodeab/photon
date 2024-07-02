@@ -1,14 +1,11 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
+import AlarmeScreen from './AlarmeScreen';
 
 const MenuScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>Menu Screen</Text>
-      <Button
-        title="Go to Login"
-        onPress={() => navigation.navigate('Login')}
-      />
+      <AlarmeScreen />
     </View>
   );
 };
