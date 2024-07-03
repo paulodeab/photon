@@ -4,24 +4,24 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const CustomDrawerContent = (props) => {
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props} >
       <View style={styles.header}>
         <Text style={styles.headerText}>Menu</Text>
       </View>
       <DrawerItem
-        label="Alarms"
+        label="Alarmes"
         onPress={() => props.navigation.navigate('Alarmes')}
       />
       <DrawerItem
-        label="Charts"
-        onPress={() => props.navigation.navigate('Gráficos')}
+        label="Gráficos"
+        onPress={() => props.navigation.navigate('Grafico')}
       />
       <DrawerItem
-        label="Reports"
-        onPress={() => props.navigation.navigate('Relatórios')}
+        label="Relatórios"
+        onPress={() => props.navigation.navigate('Relatorio')}
       />
       <DrawerItem
-        label="Logout"
+        label="Sair"
         onPress={() => props.navigation.navigate('Login')}
       />
     </DrawerContentScrollView>
