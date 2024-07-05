@@ -5,6 +5,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import Equipamento from "../service/Equipamento";
 import Disjuntor from "../service/Disjuntor";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import GraficoConsumoScreen from "./GraficoConsumoScreen";
 
 function GraficoScreen() {
     const [selectedEquipamento, setSelectedEquipamento] = useState<number | null>(null);
@@ -151,7 +152,7 @@ function GraficoScreen() {
             <Button title="Enviar" />
         </View>
         <View style={styles.container}>
-            
+            <GraficoConsumoScreen />
         </View>                    
     </View>
 );
@@ -211,9 +212,6 @@ const pickerSelectStyles = StyleSheet.create({
         paddingRight: 30, // to ensure the text is never behind the icon
     },
 });
-
-
-   {/*  */}
 
 
 export default GraficoScreen;

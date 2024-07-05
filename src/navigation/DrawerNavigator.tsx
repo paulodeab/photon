@@ -6,6 +6,7 @@ import CustomDrawerContent from '../components/CustomDrawerContent';
 import { View, Text } from 'react-native';
 import AlarmeScreen from '../screens/AlarmeScreen';
 import GraficoScreen from '../screens/GraficoScreen';
+import RelatorioScreen from '../screens/RelatorioScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,7 +20,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Menu" component={MenuScreen} />
       <Drawer.Screen name="Alarmes" component={AlarmeScreen} />
       <Drawer.Screen name="Grafico" component={GraficoScreen} />
-      <Drawer.Screen name="Relatorio" component={() => <View><Text>Reports Page</Text></View>} />
+      <Drawer.Screen name="Relatorio" component={RelatorioScreen} />
     </Drawer.Navigator>
   );
 };
