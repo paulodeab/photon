@@ -44,7 +44,7 @@ class Grafico {
 
     async getGraficoData(): Promise<Grafico[]> {
         try {
-            const parameter = {"start": '2024-06-01', "end": '2024-06-05', "breaker": 71}
+            const parameter = {"start": '2024-06-01', "end": '2024-06-06', "breaker": 71}
 
             const response = await axios.get(this.API, {params:parameter}); 
             const data = response.data.map((item: any) => 

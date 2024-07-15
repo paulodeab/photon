@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView, Dimensions } from 'react-native';
-import { BarChart } from 'react-native-chart-kit';
+import { LineChart } from 'react-native-chart-kit';
 import Grafico from '../service/Grafico';
 import { format } from 'date-fns';
 
 const screenWidth = Dimensions.get("window").width;
 
-const GraficoConsumoScreen = () => {
+const GraficoFatorPotenciaScreen = () => {
     const [graficoData, setGraficoData] = useState<Grafico[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -38,42 +38,58 @@ const GraficoConsumoScreen = () => {
         labels: graficoData.map(item => format(new Date(item.hourGroup), 'dd/MM HH:mm')),
         datasets: [
             {
-                data: graficoData.map(item => item.consumeBreaker),
-                color: (opacity = 1) => `rgba(255, 140, 0, ${opacity})`, // Cor das colunas
+                data: graficoData.map(item => item.phaseOnePowerFactor),
+                color: (opacity = 1) => `rgb(255, 0, 0)`, // Red
+                legend: 'Fase 1'
+            },
+            {
+                data: graficoData.map(item => item.phaseTwoPowerFactor),
+                color: (opacity = 1) => `rgb(0, 255, 0)`, // Green
+                legend: 'Fase 2'
+            },
+            {
+                data: graficoData.map(item => item.phaseThreePowerFactor),
+                color: (opacity = 1) => `rgb(0, 0, 255)`, // Blue
+                legend: 'Fase 3'
             }
-        ]
+        ],
+        legend: ['Fase 1', 'Fase 2', 'Fase 3'] // Adding legend
     };
 
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={styles.title}>Consumo do Disjuntor - KWh por Hora</Text>
+                <Text style={styles.title}>Fator de Potência</Text>
                 <ScrollView horizontal>
-                    <View style={{ width: Math.max(screenWidth, chartData.labels.length * 50) }}>
-                        <BarChart
+                    <View>
+                        <LineChart
                             verticalLabelRotation={80}
                             data={chartData}
-                            width={Math.max(screenWidth, chartData.labels.length * 50)}
-                            height={430}
+                            width={Math.max(screenWidth, chartData.labels.length * 50)} // Allow horizontal scrolling
+                            height={450}
                             yAxisLabel=""
                             yAxisSuffix=""
                             chartConfig={{
-
                                 backgroundColor: '#F8F8FF',
                                 backgroundGradientFrom: '#F8F8FF',
                                 backgroundGradientTo: '#F8F8FF',
-                                decimalPlaces: 3, // Ajustado para 3 casas decimais
+                                decimalPlaces: 3,
                                 color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                                 labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                                 style: {
                                     borderRadius: 16
                                 },
-                                fillShadowGradient: "#FF8C00",
-                                fillShadowGradientOpacity: 1,
+                                propsForDots: {
+                                    r: "6",
+                                    strokeWidth: "2",
+                                    stroke: "#ffa726"
+                                },
+                                formatXLabel: (value) => value.replace(' ', '\n')
                             }}
+                            
                             style={{
                                 marginVertical: 8,
-                                borderRadius: 16
+                                borderRadius: 18
                             }}
                         />
                     </View>
@@ -85,16 +101,15 @@ const GraficoConsumoScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 30,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        
     },
     loadingContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 10
     },
     title: {
         fontSize: 20,
@@ -103,5 +118,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default GraficoConsumoScreen;
- 
+export default GraficoFatorPotenciaScreen;
