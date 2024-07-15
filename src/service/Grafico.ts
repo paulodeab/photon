@@ -42,9 +42,9 @@ class Grafico {
         this.API = ApiUrl.URL + 'report_consume_measures';  
     }
 
-    async getGraficoData(): Promise<Grafico[]> {
+    async getGraficoData(start, end, breaker): Promise<Grafico[]> {
         try {
-            const parameter = {"start": '2024-06-01', "end": '2024-06-06', "breaker": 71}
+            const parameter = {"start": start, "end": end, "breaker": breaker}
 
             const response = await axios.get(this.API, {params:parameter}); 
             const data = response.data.map((item: any) => 
