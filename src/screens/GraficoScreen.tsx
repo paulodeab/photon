@@ -7,6 +7,7 @@ import Disjuntor from "../service/Disjuntor";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import GraficoConsumoScreen from "./GraficoConsumoScreen";
 import GraficoFatorPotencia from "./GraficoFatorPotenciaScreen"; 
+import GraficoTensaoScreen from "./GraficoTensaoScreen";
 
 function GraficoScreen() {
 
@@ -71,6 +72,10 @@ function GraficoScreen() {
                        {
                         codigo : 2,
                         nome : "Fator de Potência" 
+                       },
+                       {
+                        codigo : 3,
+                        nome: "Tensão por Corrente"
                        }
     ];
 
@@ -159,6 +164,9 @@ function GraficoScreen() {
                 )}
                 {showGrafico && selectedTipo === "2" && (
                     <GraficoFatorPotencia />
+                )}
+                {showGrafico && selectedTipo === "3" && (
+                        <GraficoTensaoScreen />
                 )}
             </View>                   
         </View>
