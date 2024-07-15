@@ -5,9 +5,9 @@ import RNPickerSelect from 'react-native-picker-select';
 import Equipamento from "../service/Equipamento";
 import Disjuntor from "../service/Disjuntor";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import GraficoConsumoScreen from "./GraficoConsumoScreen";
-import GraficoFatorPotencia from "./GraficoFatorPotenciaScreen"; 
-import GraficoTensaoScreen from "./GraficoTensaoScreen";
+import GraficoConsumoScreen from "./graphics/GraficoConsumoScreen";
+import GraficoFatorPotencia from "./graphics/GraficoFatorPotenciaScreen"; 
+import GraficoTensaoScreen from "./graphics/GraficoTensaoScreen";
 
 function GraficoScreen() {
 
@@ -66,17 +66,17 @@ function GraficoScreen() {
     };
 
     const tipoGrafico = () => [{
-                        codigo : 1,
-                        nome : "Consumo KWh"       
-                       },
-                       {
-                        codigo : 2,
-                        nome : "Fator de Potência" 
-                       },
-                       {
-                        codigo : 3,
-                        nome: "Tensão por Corrente"
-                       }
+                            codigo : 1,
+                            nome : "Consumo KWh"       
+                        },
+                        {
+                            codigo : 2,
+                            nome : "Fator de Potência" 
+                        },
+                        {
+                            codigo : 3,
+                            nome: "Tensão por Corrente"
+                        }
     ];
 
     const handleGraficoChange = (value: string | null) => {
@@ -160,13 +160,13 @@ function GraficoScreen() {
             </View>
             <View style={styles.container}>
                 {showGrafico && selectedTipo === "1" && (
-                    <GraficoConsumoScreen />
+                    <GraficoConsumoScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor}/>
                 )}
                 {showGrafico && selectedTipo === "2" && (
-                    <GraficoFatorPotencia />
+                    <GraficoFatorPotencia start={dtInicial} end={dtFinal} breaker={selectedDisjuntor} />
                 )}
                 {showGrafico && selectedTipo === "3" && (
-                        <GraficoTensaoScreen />
+                    <GraficoTensaoScreen  start={dtInicial} end={dtFinal} breaker={selectedDisjuntor}/>
                 )}
             </View>                   
         </View>

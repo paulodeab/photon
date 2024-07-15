@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView, Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import Grafico from '../service/Grafico';
+import Grafico from '../../service/Grafico';
 import { format } from 'date-fns';
 
 const screenWidth = Dimensions.get("window").width;
 
-const GraficoFatorPotenciaScreen = () => {
+const GraficoTensaoScreen = ({start, end, breaker}) => {
     const [graficoData, setGraficoData] = useState<Grafico[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -14,7 +14,7 @@ const GraficoFatorPotenciaScreen = () => {
         const fetchGraficoData = async () => {
             try {
                 const grafico = new Grafico();
-                const data = await grafico.getGraficoData();
+                const data = await grafico.getGraficoData(start, end, breaker);
                 setGraficoData(data);
             } catch (error) {
                 console.error('Erro ao buscar dados do gráfico:', error);
@@ -38,28 +38,42 @@ const GraficoFatorPotenciaScreen = () => {
         labels: graficoData.map(item => format(new Date(item.hourGroup), 'dd/MM HH:mm')),
         datasets: [
             {
-                data: graficoData.map(item => item.phaseOnePowerFactor),
+                data: graficoData.map(item => item.phaseOneVoltage),
                 color: (opacity = 1) => `rgb(255, 0, 0)`, // Red
-                legend: 'Fase 1'
+                label: 'Fase 1'
             },
             {
-                data: graficoData.map(item => item.phaseTwoPowerFactor),
+                data: graficoData.map(item => item.phaseTwoVoltage),
                 color: (opacity = 1) => `rgb(0, 255, 0)`, // Green
-                legend: 'Fase 2'
+                label: 'Fase 2'
             },
             {
-                data: graficoData.map(item => item.phaseThreePowerFactor),
+                data: graficoData.map(item => item.phaseThreeVoltage),
                 color: (opacity = 1) => `rgb(0, 0, 255)`, // Blue
-                legend: 'Fase 3'
+                label: 'Fase 3'
             }
         ],
-        legend: ['Fase 1', 'Fase 2', 'Fase 3'] // Adding legend
+ 
     };
 
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={styles.title}>Fator de Potência</Text>
+                <Text style={styles.title}>Tensão das Fases</Text>
+                <View style={styles.legendContainer}>
+                    <View style={styles.legendItem}>
+                        <View style={[styles.legendColor, { backgroundColor: 'red' }]} />
+                        <Text>Fase 1</Text>
+                    </View>
+                    <View style={styles.legendItem}>
+                        <View style={[styles.legendColor, { backgroundColor: 'green' }]} />
+                        <Text>Fase 2</Text>
+                    </View>
+                    <View style={styles.legendItem}>
+                        <View style={[styles.legendColor, { backgroundColor: 'blue' }]} />
+                        <Text>Fase 3</Text>
+                    </View>
+                </View>
                 <ScrollView horizontal>
                     <View>
                         <LineChart
@@ -68,7 +82,7 @@ const GraficoFatorPotenciaScreen = () => {
                             width={Math.max(screenWidth, chartData.labels.length * 50)} // Allow horizontal scrolling
                             height={450}
                             yAxisLabel=""
-                            yAxisSuffix=""
+                            yAxisSuffix="V"
                             chartConfig={{
                                 backgroundColor: '#F8F8FF',
                                 backgroundGradientFrom: '#F8F8FF',
@@ -86,7 +100,7 @@ const GraficoFatorPotenciaScreen = () => {
                                 },
                                 formatXLabel: (value) => value.replace(' ', '\n')
                             }}
-                            
+                            bezier
                             style={{
                                 marginVertical: 8,
                                 borderRadius: 18
@@ -116,6 +130,22 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
     },
+    legendContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 10,
+    },
+    legendItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: 10,
+    },
+    legendColor: {
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+        marginRight: 5,
+    },
 });
 
-export default GraficoFatorPotenciaScreen;
+export default GraficoTensaoScreen;
