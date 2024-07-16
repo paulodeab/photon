@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Platform } from "react-native";
+import { View, Text, TextInput, Platform, SafeAreaView } from "react-native";
 import { StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Equipamento from "../service/Equipamento";
 import Disjuntor from "../service/Disjuntor";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import ReportConsumeScreen from "./reports/ReportConsumeScreen";
 
 
 function RelatorioScreen() {
@@ -19,6 +20,7 @@ function RelatorioScreen() {
     const [showFinalPicker, setShowFinalPicker] = useState(false);
     const [selectedTipo, setSelectedTipo] = useState<string | null>(null);
     const [showRelatorio, setShowRelatorio] = useState<boolean>(false);
+
 
     useEffect(() => {
         getEquipamento();
@@ -137,7 +139,7 @@ function RelatorioScreen() {
                             value={dtFinal || new Date()}
                             mode="date"
                             display="default"
-                            onChange={onDtFinalChange}
+                            onChange={onDtFinalChange}    
                         />
                     )}
                 </View>
@@ -156,6 +158,12 @@ function RelatorioScreen() {
                 />
             </View>
             <View style={styles.container}>
+
+                {showRelatorio && selectedTipo === "1" && (
+                     <SafeAreaView style={{ flex: 1 }}>
+                        <ReportConsumeScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor}/>
+                    </SafeAreaView>
+                )}
                 {/* {showGrafico && selectedTipo === "1" && (
                     <GraficoConsumoScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor}/>
                 )}
