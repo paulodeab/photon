@@ -16,7 +16,6 @@ const DrawerNavigator = () => {
       initialRouteName="Menu"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Login" component={LoginScreen} />
       <Drawer.Screen name="Menu" component={MenuScreen} />
       <Drawer.Screen name="Alarmes" component={AlarmeScreen} />
       <Drawer.Screen name="Grafico" component={GraficoScreen} />

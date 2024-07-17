@@ -14,7 +14,7 @@ const LoginScreen = ({ navigation }) => {
 
     if (status === 200) {
       setErrorMessage("");
-      navigation.navigate('Menu');
+      navigation.replace('Main');
     } else {
       setErrorMessage("Falha ao realizar o login. Verifique suas credenciais.");
     }
