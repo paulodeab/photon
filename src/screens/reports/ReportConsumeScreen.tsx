@@ -31,7 +31,27 @@ const ReportConsumeScreen = ({ start, end, breaker }) => {
         fetchConsumeData();
     }, [start, end, breaker]);
 
+    function convertToMWh(valueInKWh: number | null, vlrComponenteTarifario: number | 0, unidade: string) {
+        
+        if (valueInKWh === null) return "N/A";
+        /* if (measureData.length === 0) return "N/A";
+            const vlrComponenteTarifario = measureData[0].vlrComponenteTarifario || 0; 
+        */
+
+        let result;
+        if (unidade === 'R$/MWh') {
+            // Converte de KWh para MWh
+            result = (valueInKWh / 1000) * vlrComponenteTarifario;
+        } else {
+            // Mantém o valor como está
+            result = valueInKWh * vlrComponenteTarifario;
+        }
+
+        return result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
     const calculateTotals = (data: Medicao[]) => {
+       
         let totalConsume = 0;
         let totalValue = 0;
 
@@ -56,10 +76,10 @@ const ReportConsumeScreen = ({ start, end, breaker }) => {
         <View style={styles.itemContainer}>
             <Text style={styles.itemText}>Data: {format(new Date(item.dateMeasure), 'dd/MM/yyyy')}</Text>
             <Text style={styles.itemText}>Descrição Unidade: {item.dscUnidade}</Text>
-            <Text style={styles.itemText}>Consumo: {item.consumeBreaker.toFixed(8)} kWh</Text>
+            <Text style={styles.itemText}>Consumo: {item.consumeBreaker.toFixed(8)}  KWh</Text>
             <Text style={styles.itemText}>Componente Tarifária: {item.dscComponenteTarifario}</Text>
-            <Text style={styles.itemText}>Valor Componente Tarifário: R${item.vlrComponenteTarifario}</Text>
-            <Text style={styles.itemText}>Subtotal: R${(item.vlrComponenteTarifario * item.consumeBreaker).toFixed(2)}</Text>
+            <Text style={styles.itemText}>Valor Componente Tarifário: {item.vlrComponenteTarifario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Text>
+            <Text style={styles.itemText}>Subtotal: {convertToMWh(item.consumeBreaker, item.vlrComponenteTarifario, item.dscComponenteTarifario )}</Text>
         </View>
     );
 
@@ -76,8 +96,8 @@ const ReportConsumeScreen = ({ start, end, breaker }) => {
                 renderItem={renderItem}
             />
             <View style={styles.totalContainer}>
-                <Text style={styles.totalText}>Total de Consumo: {totalConsume.toFixed(8)} kWh</Text>
-                <Text style={styles.totalText}>Total do Período: R${totalValue.toFixed(2)}</Text>
+                <Text style={styles.totalText}>Total de Consumo: {totalConsume.toFixed(8)} {consumeData[0].dscUnidade === 'R$/MWh' ? 'MWh': 'KW'} </Text>
+                <Text style={styles.totalText}>Total do Período: {totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Text>
             </View>
         </View>
     );

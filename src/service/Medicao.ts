@@ -78,18 +78,6 @@ class Medicao{
     }
   }
 
-  public async getReportConsumeMeasure(start: string, end: string, breaker: number): Promise<any[]> {
-    try {
-      const parameter = {"start": start, "end": end, "breaker": breaker}
-      const result = await axios.get(this.URL+'report_consume_kwh', {params:parameter});
-      console.log(result.data);
-      return result.data;
-    } catch (error) {
-      console.error('Erro ao buscar dados:', error);
-      throw error;
-    }
-  }
-
 }
 
 export default Medicao;

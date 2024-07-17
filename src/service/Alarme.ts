@@ -49,6 +49,30 @@ class Alarme {
             throw error;
         }
     }
+
+    public async getHistoricoAlarmes(start: string, end: string, breaker: number): Promise<Alarme[]>{
+
+        try{
+            const parameter = {"start": start, "end": end, "breaker": breaker};
+        
+            const result = await axios.get(ApiUrl.URL+'history_alarms', {params: parameter});
+            const alarmData = result.data;
+            return alarmData.map((alarm: any) => new Alarme(
+                new Date(alarm.date),
+                alarm.alarm_type,
+                alarm.breaker_idbreaker,
+                alarm.breaker_name,
+                alarm.status,
+                alarm.equipment_name,
+                alarm.idalarms
+            ));
+
+        } catch (error){
+            console.error('Erro ao buscar alarmes:', error);
+            throw error;
+        }
+
+    }
 }
 
 

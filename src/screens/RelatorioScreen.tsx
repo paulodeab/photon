@@ -6,6 +6,7 @@ import Equipamento from "../service/Equipamento";
 import Disjuntor from "../service/Disjuntor";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ReportConsumeScreen from "./reports/ReportConsumeScreen";
+import ReportAlarmeHistoricoScreen from "./reports/ReportAlarmeHistoricoScreen";
 
 
 function RelatorioScreen() {
@@ -72,16 +73,13 @@ function RelatorioScreen() {
                         {
                             codigo : 2,
                             nome : "Histórico de Alarmes" 
-                        },
-                        {
-                            codigo : 3,
-                            nome: "Alarmes Abertos"
                         }];
 
     const handleGraficoChange = (value: string | null) => {
         setSelectedTipo(value);
         setShowRelatorio(true);
     };
+
 
     return (
         <View style={styles.container}>
@@ -164,9 +162,11 @@ function RelatorioScreen() {
                         <ReportConsumeScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor}/>
                     </SafeAreaView>
                 )}
-                {/* {showGrafico && selectedTipo === "1" && (
-                    <GraficoConsumoScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor}/>
+                 {showRelatorio && selectedTipo === "2" && (
+                    <ReportAlarmeHistoricoScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor} />
                 )}
+                
+                {/*
                 {showGrafico && selectedTipo === "2" && (
                     <GraficoFatorPotencia start={dtInicial} end={dtFinal} breaker={selectedDisjuntor} />
                 )}

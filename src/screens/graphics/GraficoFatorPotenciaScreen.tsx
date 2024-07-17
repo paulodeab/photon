@@ -34,6 +34,9 @@ const GraficoFatorPotenciaScreen = ({start, end, breaker}) => {
         );
     }
 
+
+    
+
     const chartData = {
         labels: graficoData.map(item => format(new Date(item.hourGroup), 'dd/MM HH:mm')),
         datasets: [
