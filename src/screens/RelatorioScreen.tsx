@@ -166,13 +166,6 @@ function RelatorioScreen() {
                     <ReportAlarmeHistoricoScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor} />
                 )}
                 
-                {/*
-                {showGrafico && selectedTipo === "2" && (
-                    <GraficoFatorPotencia start={dtInicial} end={dtFinal} breaker={selectedDisjuntor} />
-                )}
-                {showGrafico && selectedTipo === "3" && (
-                    <GraficoTensaoScreen  start={dtInicial} end={dtFinal} breaker={selectedDisjuntor}/>
-                )} */}
             </View>                   
         </View>
     );

@@ -4,9 +4,10 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const CustomDrawerContent = (props) => {
   return (
-    <DrawerContentScrollView {...props} >
+    <DrawerContentScrollView style={styles.drawerItem} {...props} >
       <View style={styles.header}>
         <Text style={styles.headerText}>Menu</Text>
+
       </View>
       <DrawerItem
         label="Alarmes"
@@ -33,13 +34,18 @@ const styles = StyleSheet.create({
     height: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f58634',
+    backgroundColor: '#F58634',
   },
   headerText: {
     color: '#ffffff',
     fontSize: 24,
     fontWeight: 'bold',
   },
+  drawerItem: {
+
+    backgroundColor: '#F58634',
+    fontWeight: 'bold'
+  }
 });
 
 export default CustomDrawerContent;
