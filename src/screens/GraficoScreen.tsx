@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Platform } from "react-native";
-import { StyleSheet } from 'react-native';
+import { View, Text, TextInput, Platform, StyleSheet } from "react-native";
 import RNPickerSelect from 'react-native-picker-select';
 import Equipamento from "../service/Equipamento";
 import Disjuntor from "../service/Disjuntor";
@@ -10,7 +9,6 @@ import GraficoFatorPotencia from "./graphics/GraficoFatorPotenciaScreen";
 import GraficoTensaoScreen from "./graphics/GraficoTensaoScreen";
 
 function GraficoScreen() {
-
     const [selectedEquipamento, setSelectedEquipamento] = useState<number | null>(null);
     const [listaEquipamento, setListaEquipamento] = useState<Equipamento[]>([]);
     const [selectedDisjuntor, setSelectedDisjuntor] = useState<number | null>(null);
@@ -88,7 +86,7 @@ function GraficoScreen() {
         <View style={styles.container}>
             <View style={styles.row}>
                 <View style={[styles.pickerContainer, styles.flex1]}>
-                    <Text>EQUIPAMENTO</Text>
+                    <Text style={styles.label}>EQUIPAMENTO</Text>
                     <RNPickerSelect
                         onValueChange={(value) => setSelectedEquipamento(value)}
                         items={listaEquipamento.map((equipamento) => ({
@@ -96,10 +94,11 @@ function GraficoScreen() {
                             value: equipamento.getIdequipment()
                         }))}
                         placeholder={{ label: "Selecione um equipamento", value: null }}
+                        style={pickerSelectStyles}
                     />
                 </View>
                 <View style={[styles.pickerContainer, styles.flex1]}>
-                    <Text>DISJUNTOR</Text>
+                    <Text style={styles.label}>DISJUNTOR</Text>
                     <RNPickerSelect
                         onValueChange={(value) => setSelectedDisjuntor(value)}
                         items={listaDisjuntor.map((disjuntor) => ({
@@ -107,13 +106,14 @@ function GraficoScreen() {
                             value: disjuntor.getIdbreaker()
                         }))}
                         placeholder={{ label: "Selecione um disjuntor", value: null }}
+                        style={pickerSelectStyles}
                     />
                 </View>
             </View>
 
             <View style={styles.row}>
                 <View style={[styles.flex1, styles.inputContainer]}>
-                    <Text>DATA INICIAL</Text>
+                    <Text style={styles.label}>DATA INICIAL</Text>
                     <TextInput
                         value={dtInicial ? dtInicial.toLocaleDateString() : ""}
                         onFocus={() => setShowInicialPicker(true)}
@@ -129,7 +129,7 @@ function GraficoScreen() {
                     )}
                 </View>
                 <View style={[styles.flex1, styles.inputContainer]}>
-                    <Text>DATA FINAL</Text>
+                    <Text style={styles.label}>DATA FINAL</Text>
                     <TextInput
                         value={dtFinal ? dtFinal.toLocaleDateString() : ""}
                         onFocus={() => setShowFinalPicker(true)}
@@ -147,7 +147,7 @@ function GraficoScreen() {
             </View>
 
             <View style={styles.pickerContainer}>
-                <Text>TIPO</Text>
+                <Text style={styles.label}>TIPO</Text>
                 <RNPickerSelect
                     onValueChange={(value) => handleGraficoChange(value)}
                     items={tipoGrafico().map((tipo) => ({
@@ -178,13 +178,13 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         backgroundColor: '#fff',
-        marginTop: 50
+        marginTop: 50,
     },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 10,
     },
     pickerContainer: {
         borderWidth: 1,
@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         width: '48%', // Ajuste conforme necessário
+        backgroundColor: '#f9f9f9', // Adicione um fundo claro
     },
     inputContainer: {
         borderWidth: 1,
@@ -199,14 +200,25 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         width: '48%', // Ajuste conforme necessário
+        backgroundColor: '#f9f9f9', // Adicione um fundo claro
     },
     flex1: {
         flex: 1,
     },
     input: {
         width: '100%',
+        height: 40,
+        padding: 8,
+        borderRadius: 5,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        backgroundColor: '#fff',
     },
-   
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        color: '#333',
+    },
 });
 
 const pickerSelectStyles = StyleSheet.create({
@@ -218,6 +230,8 @@ const pickerSelectStyles = StyleSheet.create({
         borderRadius: 5,
         color: 'black',
         paddingRight: 30, // to ensure the text is never behind the icon
+        backgroundColor: '#f9f9f9',
+        borderColor: '#ccc',
     },
     inputAndroid: {
         fontSize: 16,
@@ -227,6 +241,8 @@ const pickerSelectStyles = StyleSheet.create({
         borderRadius: 5,
         color: 'black',
         paddingRight: 30, // to ensure the text is never behind the icon
+        backgroundColor: '#f9f9f9',
+        borderColor: '#ccc',
     },
 });
 

@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     pickerContainer: {
-        borderWidth: 1,
-        borderColor: '#ccc',
+        borderWidth: 2,
+        borderColor: '#F58634',
         borderRadius: 5,
         padding: 10,
         width: '48%', // Ajuste conforme necessário
