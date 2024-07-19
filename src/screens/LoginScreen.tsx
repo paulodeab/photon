@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Alert, Image, TouchableOpacity } from 'react-native';
 import Login from '../service/Login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({ navigation }) => {
   
@@ -13,6 +14,7 @@ const LoginScreen = ({ navigation }) => {
     const status = await login.logar();
 
     if (status === 200) {
+    //  await AsyncStorage.setItem('user_token',);
       setErrorMessage("");
       navigation.replace('Main');
     } else {
