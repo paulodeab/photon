@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }) => {
           keyboardType="email-address"
           autoCapitalize="none"
           placeholder="Digite seu e-mail"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#D6D4D2"
         />
 
         <Text style={styles.label}>Senha</Text>
@@ -44,7 +44,7 @@ const LoginScreen = ({ navigation }) => {
           onChangeText={(e) => setSenha(e)}
           secureTextEntry
           placeholder="Digite sua senha"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#D6D4D2"
         />
 
         {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
@@ -99,12 +99,12 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   button: {
-    width: '100%',
+    width: '40%',
     height: 50,
     backgroundColor: '#F58634',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 20,
   },
   buttonText: {
     color: '#FFF',

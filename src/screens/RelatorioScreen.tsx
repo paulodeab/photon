@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Platform, SafeAreaView } from "react-native";
-import { StyleSheet } from 'react-native';
+import { View, Text, TextInput, Platform, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
 import RNPickerSelect from 'react-native-picker-select';
 import Equipamento from "../service/Equipamento";
 import Disjuntor from "../service/Disjuntor";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import ReportConsumeScreen from "./reports/ReportConsumeScreen";
 import ReportAlarmeHistoricoScreen from "./reports/ReportAlarmeHistoricoScreen";
 
-
 function RelatorioScreen() {
-
     const [selectedEquipamento, setSelectedEquipamento] = useState<number | null>(null);
     const [listaEquipamento, setListaEquipamento] = useState<Equipamento[]>([]);
     const [selectedDisjuntor, setSelectedDisjuntor] = useState<number | null>(null);
@@ -21,7 +19,6 @@ function RelatorioScreen() {
     const [showFinalPicker, setShowFinalPicker] = useState(false);
     const [selectedTipo, setSelectedTipo] = useState<string | null>(null);
     const [showRelatorio, setShowRelatorio] = useState<boolean>(false);
-
 
     useEffect(() => {
         getEquipamento();
@@ -80,12 +77,11 @@ function RelatorioScreen() {
         setShowRelatorio(true);
     };
 
-
     return (
         <View style={styles.container}>
             <View style={styles.row}>
                 <View style={[styles.pickerContainer, styles.flex1]}>
-                    <Text>EQUIPAMENTO</Text>
+                    <Text style={styles.label}>EQUIPAMENTO</Text>
                     <RNPickerSelect
                         onValueChange={(value) => setSelectedEquipamento(value)}
                         items={listaEquipamento.map((equipamento) => ({
@@ -93,10 +89,11 @@ function RelatorioScreen() {
                             value: equipamento.getIdequipment()
                         }))}
                         placeholder={{ label: "Selecione um equipamento", value: null }}
+                        style={pickerSelectStyles}
                     />
                 </View>
                 <View style={[styles.pickerContainer, styles.flex1]}>
-                    <Text>DISJUNTOR</Text>
+                    <Text style={styles.label}>DISJUNTOR</Text>
                     <RNPickerSelect
                         onValueChange={(value) => setSelectedDisjuntor(value)}
                         items={listaDisjuntor.map((disjuntor) => ({
@@ -104,18 +101,24 @@ function RelatorioScreen() {
                             value: disjuntor.getIdbreaker()
                         }))}
                         placeholder={{ label: "Selecione um disjuntor", value: null }}
+                        style={pickerSelectStyles}
                     />
                 </View>
             </View>
 
             <View style={styles.row}>
                 <View style={[styles.flex1, styles.inputContainer]}>
-                    <Text>DATA INICIAL</Text>
-                    <TextInput
-                        value={dtInicial ? dtInicial.toLocaleDateString() : ""}
-                        onFocus={() => setShowInicialPicker(true)}
-                        style={styles.input}
-                    />
+                    <Text style={styles.label}>DATA INICIAL</Text>
+                    <View style={styles.datePickerContainer}>
+                        <TextInput
+                            value={dtInicial ? dtInicial.toLocaleDateString() : ""}
+                            onFocus={() => setShowInicialPicker(true)}
+                            style={styles.input}
+                        />
+                        <TouchableOpacity onPress={() => setShowInicialPicker(true)}>
+                            <Icon name="calendar-today" size={24} color="#333" />
+                        </TouchableOpacity>
+                    </View>
                     {showInicialPicker && (
                         <DateTimePicker
                             value={dtInicial || new Date()}
@@ -126,12 +129,17 @@ function RelatorioScreen() {
                     )}
                 </View>
                 <View style={[styles.flex1, styles.inputContainer]}>
-                    <Text>DATA FINAL</Text>
-                    <TextInput
-                        value={dtFinal ? dtFinal.toLocaleDateString() : ""}
-                        onFocus={() => setShowFinalPicker(true)}
-                        style={styles.input}
-                    />
+                    <Text style={styles.label}>DATA FINAL</Text>
+                    <View style={styles.datePickerContainer}>
+                        <TextInput
+                            value={dtFinal ? dtFinal.toLocaleDateString() : ""}
+                            onFocus={() => setShowFinalPicker(true)}
+                            style={styles.input}
+                        />
+                        <TouchableOpacity onPress={() => setShowFinalPicker(true)}>
+                            <Icon name="calendar-today" size={24} color="#333" />
+                        </TouchableOpacity>
+                    </View>
                     {showFinalPicker && (
                         <DateTimePicker
                             value={dtFinal || new Date()}
@@ -144,7 +152,7 @@ function RelatorioScreen() {
             </View>
 
             <View style={styles.pickerContainer}>
-                <Text>TIPO</Text>
+                <Text style={styles.label}>TIPO</Text>
                 <RNPickerSelect
                     onValueChange={(value) => handleGraficoChange(value)}
                     items={tipoGrafico().map((tipo) => ({
@@ -156,7 +164,6 @@ function RelatorioScreen() {
                 />
             </View>
             <View style={styles.container}>
-
                 {showRelatorio && selectedTipo === "1" && (
                      <SafeAreaView style={{ flex: 1 }}>
                         <ReportConsumeScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor}/>
@@ -165,7 +172,6 @@ function RelatorioScreen() {
                  {showRelatorio && selectedTipo === "2" && (
                     <ReportAlarmeHistoricoScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor} />
                 )}
-                
             </View>                   
         </View>
     );
@@ -185,26 +191,43 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     pickerContainer: {
-        borderWidth: 2,
-        borderColor: '#F58634',
+        borderWidth: 1,
+        borderColor: '#ccc',
         borderRadius: 5,
         padding: 10,
-        width: '48%', // Ajuste conforme necessário
+        width: '48%',
+        backgroundColor: '#f9f9f9',
     },
     inputContainer: {
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
         padding: 10,
-        width: '48%', // Ajuste conforme necessário
+        width: '48%',
+        backgroundColor: '#f9f9f9',
     },
     flex1: {
         flex: 1,
     },
     input: {
-        width: '100%',
+        width: '60%',
+        height: 40,
+        padding: 8,
+        borderRadius: 5,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        backgroundColor: '#fff',
     },
-   
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        color: '#333',
+    },
+    datePickerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
 });
 
 const pickerSelectStyles = StyleSheet.create({

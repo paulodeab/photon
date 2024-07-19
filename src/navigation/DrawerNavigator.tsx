@@ -52,7 +52,7 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name="Grafico"
+        name="Gráficos"
         component={GraficoScreen}
         options={{
           drawerIcon: ({ color, size }) => (
@@ -61,7 +61,7 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name="Relatorio"
+        name="Relatórios"
         component={RelatorioScreen}
         options={{
           drawerIcon: ({ color, size }) => (

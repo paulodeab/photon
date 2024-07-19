@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Platform, StyleSheet } from "react-native";
+import { View, Text, TextInput, Platform, StyleSheet, TouchableOpacity } from "react-native";
 import RNPickerSelect from 'react-native-picker-select';
 import Equipamento from "../service/Equipamento";
 import Disjuntor from "../service/Disjuntor";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import GraficoConsumoScreen from "./graphics/GraficoConsumoScreen";
 import GraficoFatorPotencia from "./graphics/GraficoFatorPotenciaScreen"; 
 import GraficoTensaoScreen from "./graphics/GraficoTensaoScreen";
@@ -19,6 +20,7 @@ function GraficoScreen() {
     const [showFinalPicker, setShowFinalPicker] = useState(false);
     const [selectedTipo, setSelectedTipo] = useState<string | null>(null);
     const [showGrafico, setShowGrafico] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         getEquipamento();
@@ -26,7 +28,7 @@ function GraficoScreen() {
 
     useEffect(() => {
         getListaDisjuntor();
-    }, [selectedEquipamento]); // Chama getListaDisjuntor quando selectedEquipamento muda
+    }, [selectedEquipamento]);
 
     async function getEquipamento() {
         try {
@@ -38,7 +40,6 @@ function GraficoScreen() {
     }
 
     async function getListaDisjuntor() {
-        console.log("Equipamento", selectedEquipamento);
         try {
             if (selectedEquipamento !== null) {
                 const disjuntores = await new Disjuntor().getListaDisjuntor(selectedEquipamento);
@@ -78,6 +79,11 @@ function GraficoScreen() {
     ];
 
     const handleGraficoChange = (value: string | null) => {
+        if (!dtInicial || !dtFinal || !selectedEquipamento || !selectedDisjuntor) {
+            setError("Todos os campos devem ser preenchidos antes de selecionar o tipo.");
+            return;
+        }
+        setError(null);
         setSelectedTipo(value);
         setShowGrafico(true);
     };
@@ -114,11 +120,16 @@ function GraficoScreen() {
             <View style={styles.row}>
                 <View style={[styles.flex1, styles.inputContainer]}>
                     <Text style={styles.label}>DATA INICIAL</Text>
-                    <TextInput
-                        value={dtInicial ? dtInicial.toLocaleDateString() : ""}
-                        onFocus={() => setShowInicialPicker(true)}
-                        style={styles.input}
-                    />
+                    <View style={styles.datePickerContainer}>
+                        <TextInput
+                            value={dtInicial ? dtInicial.toLocaleDateString() : ""}
+                            onFocus={() => setShowInicialPicker(true)}
+                            style={styles.input}
+                        />
+                        <TouchableOpacity onPress={() => setShowInicialPicker(true)}>
+                            <Icon name="calendar-today" size={24} color="#333" />
+                        </TouchableOpacity>
+                    </View>
                     {showInicialPicker && (
                         <DateTimePicker
                             value={dtInicial || new Date()}
@@ -130,11 +141,16 @@ function GraficoScreen() {
                 </View>
                 <View style={[styles.flex1, styles.inputContainer]}>
                     <Text style={styles.label}>DATA FINAL</Text>
-                    <TextInput
-                        value={dtFinal ? dtFinal.toLocaleDateString() : ""}
-                        onFocus={() => setShowFinalPicker(true)}
-                        style={styles.input}
-                    />
+                    <View style={styles.datePickerContainer}>
+                        <TextInput
+                            value={dtFinal ? dtFinal.toLocaleDateString() : ""}
+                            onFocus={() => setShowFinalPicker(true)}
+                            style={styles.input}
+                        />
+                        <TouchableOpacity onPress={() => setShowFinalPicker(true)}>
+                            <Icon name="calendar-today" size={24} color="#333" />
+                        </TouchableOpacity>
+                    </View>
                     {showFinalPicker && (
                         <DateTimePicker
                             value={dtFinal || new Date()}
@@ -149,15 +165,19 @@ function GraficoScreen() {
             <View style={styles.pickerContainer}>
                 <Text style={styles.label}>TIPO</Text>
                 <RNPickerSelect
-                    onValueChange={(value) => handleGraficoChange(value)}
+                    onValueChange={handleGraficoChange}
                     items={tipoGrafico().map((tipo) => ({
                         label: tipo.nome,
                         value: tipo.codigo.toString()
                     }))}
                     placeholder={{ label: "Selecione um tipo", value: "1" }}
                     style={pickerSelectStyles}
+                    disabled={!dtInicial || !dtFinal || !selectedEquipamento || !selectedDisjuntor}
                 />
             </View>
+
+            {error && <Text style={styles.errorText}>{error}</Text>}
+
             <View style={styles.container}>
                 {showGrafico && selectedTipo === "1" && (
                     <GraficoConsumoScreen start={dtInicial} end={dtFinal} breaker={selectedDisjuntor}/>
@@ -206,7 +226,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     input: {
-        width: '100%',
+        width: '60%',
         height: 40,
         padding: 8,
         borderRadius: 5,
@@ -218,6 +238,17 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 5,
         color: '#333',
+    },
+    datePickerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 14,
+        marginVertical: 10,
+        textAlign: 'center',
     },
 });
 

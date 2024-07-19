@@ -57,7 +57,7 @@ const AlarmeScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
+        padding: 20,
         backgroundColor: '#fff',
     },
     loadingContainer: {
@@ -66,19 +66,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     itemContainer: {
-        padding: 10,
-        marginVertical: 5,
-        backgroundColor: '#f9f9f9',
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
+        padding: 20,
+        fontSize: 18,
+        marginVertical: 10,
+        backgroundColor: '#fff',
+        borderWidth: 2,
+        borderColor: '#F58634',
+        borderRadius: 10,
+       // opacity: 0.4, // Define a opacidade dos cards ativos
     },
     inactiveItem: {
         backgroundColor: '#f8d7da',
         borderColor: '#f5c6cb',
+        opacity: 0.3, // Define a opacidade dos cards inativos
     },
     itemText: {
-        fontSize: 16,
+        fontSize: 19,
+        color: '#00000',
+        fontWeight: 'bold'
     },
 });
 

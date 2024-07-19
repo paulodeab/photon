@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const CustomDrawerContent = (props) => {
   return (
-    <DrawerContentScrollView style={styles.drawerItem} {...props}>
+    <DrawerContentScrollView {...props}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Menu</Text>
       </View>
@@ -18,14 +18,14 @@ const CustomDrawerContent = (props) => {
       />
       <DrawerItem
         label="Gráficos"
-        onPress={() => props.navigation.navigate('Grafico')}
+        onPress={() => props.navigation.navigate('Gráficos')}
         labelStyle={styles.drawerLabel}
         style={styles.drawerOption}
         icon={() => <Icon name="bar-chart" size={24} color="#ffffff" />}
       />
       <DrawerItem
         label="Relatórios"
-        onPress={() => props.navigation.navigate('Relatorio')}
+        onPress={() => props.navigation.navigate('Relatórios')}
         labelStyle={styles.drawerLabel}
         style={styles.drawerOption}
         icon={() => <Icon name="description" size={24} color="#ffffff" />}
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   drawerLabel: {
     color: '#ffffff', // Cor branca para as opções do menu
     fontWeight: 'bold',
+    fontSize: 18
   },
   drawerOption: {
     borderWidth: 1,
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     marginVertical: 5, // Espaçamento vertical entre as opções
     paddingHorizontal: 10, // Espaçamento horizontal interno
     paddingVertical: 8, // Espaçamento vertical interno
-    backgroundColor: 'rgba(245, 134, 52, 0.1)', // Cor de fundo com opacidade
+    backgroundColor: 'rgba(255, 255, 255, 0.2)', // Cor de fundo com opacidade
   },
 });
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-native";
 import Alarme from "../../service/Alarme"; // Certifique-se de que o caminho esteja correto
+import { format } from "date-fns";
 
 const ReportAlarmeHistoricoScreen = ({ start, end, breaker }) => {
     const [historicoAlarmes, setHistoricoAlarmes] = useState<Alarme[]>([]);
@@ -47,8 +48,9 @@ const ReportAlarmeHistoricoScreen = ({ start, end, breaker }) => {
         <View style={styles.container}>
             <Text style={styles.title}>Relatório de Histórico de Alarmes</Text>
             <View style={styles.headerContainer}>
-                <Text style={styles.headerText}>Período: {start.toString()} até {end.toString()}</Text>
-                <Text style={styles.headerText}>Disjuntor: {breaker}</Text>
+                <Text style={styles.headerText}>Período: {format(start, 'dd/MM/yyyy')} até {format(end, 'dd/MM/yyyy')}</Text>
+                <Text style={styles.headerText}>Equipamento: {historicoAlarmes[0].equipmentName}</Text>
+                <Text style={styles.headerText}>Disjuntor: {historicoAlarmes[0].breakerName}</Text>
             </View>
             <FlatList
                 data={historicoAlarmes}
