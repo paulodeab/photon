@@ -9,6 +9,7 @@ import GraficoConsumoScreen from "./graphics/GraficoConsumoScreen";
 import GraficoFatorPotencia from "./graphics/GraficoFatorPotenciaScreen"; 
 import GraficoTensaoScreen from "./graphics/GraficoTensaoScreen";
 
+
 function GraficoScreen() {
     const [selectedEquipamento, setSelectedEquipamento] = useState<number | null>(null);
     const [listaEquipamento, setListaEquipamento] = useState<Equipamento[]>([]);
@@ -92,7 +93,10 @@ function GraficoScreen() {
         <View style={styles.container}>
             <View style={styles.row}>
                 <View style={[styles.pickerContainer, styles.flex1]}>
-                    <Text style={styles.label}>EQUIPAMENTO</Text>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>EQUIPAMENTO</Text>
+                        <Icon name="settings" size={24} color="#FF8C00"/>
+                    </View>
                     <RNPickerSelect
                         onValueChange={(value) => setSelectedEquipamento(value)}
                         items={listaEquipamento.map((equipamento) => ({
@@ -104,7 +108,10 @@ function GraficoScreen() {
                     />
                 </View>
                 <View style={[styles.pickerContainer, styles.flex1]}>
-                    <Text style={styles.label}>DISJUNTOR</Text>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>DISJUNTOR</Text>
+                        <Icon name="electrical-services" size={24} color="#FF8C00"/>
+                    </View>
                     <RNPickerSelect
                         onValueChange={(value) => setSelectedDisjuntor(value)}
                         items={listaDisjuntor.map((disjuntor) => ({
@@ -127,7 +134,7 @@ function GraficoScreen() {
                             style={styles.input}
                         />
                         <TouchableOpacity onPress={() => setShowInicialPicker(true)}>
-                            <Icon name="calendar-today" size={24} color="#333" />
+                            <Icon name="calendar-today" size={24} color="#FF8C00" />
                         </TouchableOpacity>
                     </View>
                     {showInicialPicker && (
@@ -148,7 +155,7 @@ function GraficoScreen() {
                             style={styles.input}
                         />
                         <TouchableOpacity onPress={() => setShowFinalPicker(true)}>
-                            <Icon name="calendar-today" size={24} color="#333" />
+                            <Icon name="calendar-today" size={24} color="#FF8C00" />
                         </TouchableOpacity>
                     </View>
                     {showFinalPicker && (
@@ -163,7 +170,10 @@ function GraficoScreen() {
             </View>
 
             <View style={styles.pickerContainer}>
-                <Text style={styles.label}>TIPO</Text>
+                <View style={styles.row}>
+                    <Text style={styles.label}>TIPO</Text>
+                    <Icon name="bar-chart" size={24} color="#FF8C00" />
+                </View>
                 <RNPickerSelect
                     onValueChange={handleGraficoChange}
                     items={tipoGrafico().map((tipo) => ({
@@ -198,29 +208,29 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         backgroundColor: '#fff',
-        marginTop: 50,
+        marginTop: 50
     },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 10
     },
     pickerContainer: {
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
         padding: 10,
-        width: '48%', // Ajuste conforme necessário
-        backgroundColor: '#f9f9f9', // Adicione um fundo claro
+        width: '48%',
+        backgroundColor: '#f9f9f9',
     },
     inputContainer: {
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
         padding: 10,
-        width: '48%', // Ajuste conforme necessário
-        backgroundColor: '#f9f9f9', // Adicione um fundo claro
+        width: '48%',
+        backgroundColor: '#f9f9f9',
     },
     flex1: {
         flex: 1,
@@ -238,17 +248,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 5,
         color: '#333',
+        fontWeight: 'bold'
     },
     datePickerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-    },
-    errorText: {
-        color: 'red',
-        fontSize: 14,
-        marginVertical: 10,
-        textAlign: 'center',
     },
 });
 
@@ -259,10 +264,10 @@ const pickerSelectStyles = StyleSheet.create({
         paddingHorizontal: 10,
         borderWidth: 1,
         borderRadius: 5,
+        backgroundColor: 'white',
+        borderColor: '#ccc',
         color: 'black',
         paddingRight: 30, // to ensure the text is never behind the icon
-        backgroundColor: '#f9f9f9',
-        borderColor: '#ccc',
     },
     inputAndroid: {
         fontSize: 16,
@@ -270,11 +275,12 @@ const pickerSelectStyles = StyleSheet.create({
         paddingVertical: 8,
         borderWidth: 1,
         borderRadius: 5,
+        backgroundColor: 'white',
+        borderColor: '#ccc',
         color: 'black',
         paddingRight: 30, // to ensure the text is never behind the icon
-        backgroundColor: '#f9f9f9',
-        borderColor: '#ccc',
     },
 });
+
 
 export default GraficoScreen;

@@ -17,6 +17,7 @@ const GraficoConsumoScreen = ({start, end, breaker}) => {
                 const grafico = new Grafico();
                 const data = await grafico.getGraficoData(start, end, breaker);
                 setGraficoData(data);
+                
             } catch (error) {
                 console.error('Erro ao buscar dados do gráfico:', error);
             } finally {
@@ -49,6 +50,8 @@ const GraficoConsumoScreen = ({start, end, breaker}) => {
         <ScrollView>
             <View style={styles.container}>
                 <Text style={styles.title}>Consumo do Disjuntor - KWh por Hora</Text>
+                <Text style={styles.title}>Equipamento: {graficoData[0].equipmentName} - Disjuntor: {graficoData[0].breakerName}</Text>
+                <Text style={styles.title}>Período: {format(new Date(start), 'dd/MM/yyyy')} até {format(new Date(end), 'dd/MM/yyyy')}</Text>
                 <ScrollView horizontal>
                     <View style={{ width: Math.max(screenWidth, chartData.labels.length * 50) }}>
                         <BarChart

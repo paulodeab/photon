@@ -77,32 +77,48 @@ function RelatorioScreen() {
         setShowRelatorio(true);
     };
 
+    const isPickerDisabled = !(selectedEquipamento && selectedDisjuntor && dtInicial && dtFinal);
+
     return (
         <View style={styles.container}>
             <View style={styles.row}>
                 <View style={[styles.pickerContainer, styles.flex1]}>
-                    <Text style={styles.label}>EQUIPAMENTO</Text>
-                    <RNPickerSelect
-                        onValueChange={(value) => setSelectedEquipamento(value)}
-                        items={listaEquipamento.map((equipamento) => ({
-                            label: equipamento.getEquipmentName(),
-                            value: equipamento.getIdequipment()
-                        }))}
-                        placeholder={{ label: "Selecione um equipamento", value: null }}
-                        style={pickerSelectStyles}
-                    />
+                    <View style={styles.row}>
+                        <Text style={styles.label}>EQUIPAMENTO</Text>
+                        <Icon name="settings" size={24} color="#FF8C00"/>
+                    </View>
+                    <View >
+                        <RNPickerSelect
+                            onValueChange={(value) => setSelectedEquipamento(value)}
+                            value={selectedEquipamento}
+                            items={listaEquipamento.map((equipamento) => ({
+                                label: equipamento.getEquipmentName(),
+                                value: equipamento.getIdequipment()
+                            }))}
+                            placeholder={{ label: "Selecione um equipamento", value: null }}
+                            style={pickerSelectStyles}
+                        />
+                       
+                    </View>
                 </View>
                 <View style={[styles.pickerContainer, styles.flex1]}>
-                    <Text style={styles.label}>DISJUNTOR</Text>
-                    <RNPickerSelect
-                        onValueChange={(value) => setSelectedDisjuntor(value)}
-                        items={listaDisjuntor.map((disjuntor) => ({
-                            label: disjuntor.getBreakerName(),
-                            value: disjuntor.getIdbreaker()
-                        }))}
-                        placeholder={{ label: "Selecione um disjuntor", value: null }}
-                        style={pickerSelectStyles}
-                    />
+                    <View style={styles.row}>
+                        <Text style={styles.label}>DISJUNTOR</Text>
+                        <Icon name="electrical-services" size={24} color="#FF8C00"/>
+                    </View>
+                    <View >
+                        <RNPickerSelect
+                            onValueChange={(value) => setSelectedDisjuntor(value)}
+                            value={selectedDisjuntor}
+                            items={listaDisjuntor.map((disjuntor) => ({
+                                label: disjuntor.getBreakerName(),
+                                value: disjuntor.getIdbreaker()
+                            }))}
+                            placeholder={{ label: "Selecione um disjuntor", value: null }}
+                            style={pickerSelectStyles}
+                        />
+                        
+                    </View>
                 </View>
             </View>
 
@@ -116,7 +132,7 @@ function RelatorioScreen() {
                             style={styles.input}
                         />
                         <TouchableOpacity onPress={() => setShowInicialPicker(true)}>
-                            <Icon name="calendar-today" size={24} color="#333" />
+                            <Icon name="calendar-today" size={24} color="#FF8C00" />
                         </TouchableOpacity>
                     </View>
                     {showInicialPicker && (
@@ -137,7 +153,7 @@ function RelatorioScreen() {
                             style={styles.input}
                         />
                         <TouchableOpacity onPress={() => setShowFinalPicker(true)}>
-                            <Icon name="calendar-today" size={24} color="#333" />
+                            <Icon name="calendar-today" size={24} color="#FF8C00" />
                         </TouchableOpacity>
                     </View>
                     {showFinalPicker && (
@@ -151,17 +167,26 @@ function RelatorioScreen() {
                 </View>
             </View>
 
+                        
             <View style={styles.pickerContainer}>
-                <Text style={styles.label}>TIPO</Text>
-                <RNPickerSelect
-                    onValueChange={(value) => handleGraficoChange(value)}
-                    items={tipoGrafico().map((tipo) => ({
-                        label: tipo.nome,
-                        value: tipo.codigo.toString()
-                    }))}
-                    placeholder={{ label: "Selecione um tipo", value: "1" }}
-                    style={pickerSelectStyles}
-                />
+                <View style={styles.row}>
+                    <Text style={styles.label}>TIPO</Text>
+                    <Icon name="bar-chart" size={24} color="#FF8C00" style={styles.icon} />
+                </View>
+                <View >
+                    <RNPickerSelect
+                        onValueChange={(value) => handleGraficoChange(value)}
+                        value={selectedTipo}
+                        items={tipoGrafico().map((tipo) => ({
+                            label: tipo.nome,
+                            value: tipo.codigo.toString()
+                        }))}
+                        placeholder={{ label: "Selecione um tipo", value: "1" }}
+                        style={pickerSelectStyles}
+                        disabled={isPickerDisabled}
+                    />
+      
+                </View>
             </View>
             <View style={styles.container}>
                 {showRelatorio && selectedTipo === "1" && (
@@ -194,7 +219,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
-        padding: 10,
+        padding: 20,
         width: '48%',
         backgroundColor: '#f9f9f9',
     },
@@ -222,12 +247,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 5,
         color: '#333',
+        fontWeight: 'bold'
     },
     datePickerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
     },
+    icon: {
+        paddingRight: 20
+    }
 });
 
 const pickerSelectStyles = StyleSheet.create({
@@ -237,17 +266,28 @@ const pickerSelectStyles = StyleSheet.create({
         paddingHorizontal: 10,
         borderWidth: 1,
         borderRadius: 5,
+        backgroundColor: 'white',
+        borderColor: '#ccc',
         color: 'black',
-        paddingRight: 30, // to ensure the text is never behind the icon
+        paddingRight: 10, // to ensure the text is never behind the icon
+        width: '80%',
+        height: 40,
+        padding: 8,
     },
     inputAndroid: {
+
+        width: '80%',
+        height: 40,
+        padding: 8,
         fontSize: 16,
         paddingHorizontal: 10,
         paddingVertical: 8,
         borderWidth: 1,
         borderRadius: 5,
+        backgroundColor: 'white',
+        borderColor: '#ccc',
         color: 'black',
-        paddingRight: 30, // to ensure the text is never behind the icon
+        paddingRight: 10, // to ensure the text is never behind the icon
     },
 });
 

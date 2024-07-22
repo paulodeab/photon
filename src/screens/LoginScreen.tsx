@@ -14,7 +14,7 @@ const LoginScreen = ({ navigation }) => {
     const status = await login.logar();
 
     if (status === 200) {
-    //  await AsyncStorage.setItem('user_token',);
+      await AsyncStorage.setItem('user_token', "08FB5");
       setErrorMessage("");
       navigation.replace('Main');
     } else {

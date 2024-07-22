@@ -2,8 +2,15 @@ import React from 'react';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomDrawerContent = (props) => {
+
+  const logout = async () => {
+    await AsyncStorage.removeItem('user_token');
+    props.navigation.replace('Login');
+  };
+
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.header}>
