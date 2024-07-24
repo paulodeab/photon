@@ -8,9 +8,13 @@ const CustomDrawerContent = (props) => {
 
   const logout = async () => {
     await AsyncStorage.removeItem('user_token');
-    props.navigation.replace('Login');
+    // Reset the navigation state to only include the Login screen
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
   };
-
+  
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.header}>
@@ -39,7 +43,7 @@ const CustomDrawerContent = (props) => {
       />
       <DrawerItem
         label="Sair"
-        onPress={() => props.navigation.navigate('Login')}
+        onPress={logout}
         labelStyle={styles.drawerLabel}
         style={styles.drawerOption}
         icon={() => <Icon name="exit-to-app" size={24} color="#ffffff" />}

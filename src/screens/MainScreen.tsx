@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import AlarmeScreen from './AlarmeScreen';
 
-const MenuScreen = ({ navigation }) => {
+const MainScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <AlarmeScreen />
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MenuScreen;
+export default MainScreen;

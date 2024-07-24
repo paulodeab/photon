@@ -3,18 +3,18 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // ou qualquer outro conjunto de ícones que você preferir
 import LoginScreen from '../screens/LoginScreen';
-import MenuScreen from '../screens/MenuScreen';
 import CustomDrawerContent from '../components/CustomDrawerContent';
 import AlarmeScreen from '../screens/AlarmeScreen';
 import GraficoScreen from '../screens/GraficoScreen';
 import RelatorioScreen from '../screens/RelatorioScreen';
+import MainScreen from '../screens/MainScreen';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Menu"
+      initialRouteName="Main"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         drawerActiveTintColor: '#FFF',
@@ -35,7 +35,7 @@ const DrawerNavigator = () => {
     >
       <Drawer.Screen
         name="Menu"
-        component={MenuScreen}
+        component={MainScreen}
         options={{
           drawerIcon: ({ color, size }) => (
             <Icon name="menu" color={color} size={size} />
