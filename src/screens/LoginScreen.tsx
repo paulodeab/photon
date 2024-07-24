@@ -82,10 +82,11 @@ const styles = StyleSheet.create({
     color: '#000', // Texto preto
     marginBottom: 5,
     fontSize: 24,
+    fontWeight: '500'
   },
   input: {
     width: '100%', // Garante que o campo de entrada use toda a largura disponível
-    height: 40,
+    height: 50,
     borderColor: '#F58634',
     borderWidth: 2,
     borderRadius: 5,
